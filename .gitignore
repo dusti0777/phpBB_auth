@@ -2,5 +2,6 @@
 /*/
 !/ext/
 !.gitignore
+!README.org
 *~
 ext/index.htm
