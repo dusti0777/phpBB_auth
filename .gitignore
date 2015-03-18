@@ -1,0 +1,6 @@
+/*
+/*/
+!/ext/
+!.gitignore
+*~
+ext/index.htm

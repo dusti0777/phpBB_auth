@@ -1,0 +1,27 @@
+{
+  "name": "loki/login",
+  "type": "phpbb-extension",
+  "description": "IMAP Auth plugin for phpBB",
+  "homepage": "https://github.com/Studentergaarden/phpBB_auth",
+  "version": "0.1.0",
+  "time": "2015-02-12",
+  "license": "GPL-2.0",
+  "authors": [{
+      "name": "Paw Møller",
+      "email": "pawsen@gmail.com",
+      "homepage": "http://vvv.studentergaarden.dk",
+      "role": ""
+    }],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "require-dev": {
+    "phpbb/epv": "dev-master"
+  },
+  "extra": {
+    "display-name": "phpBB loki Authentication",
+    "soft-require": {
+      "phpbb/phpbb": ">=3.1.0-RC2,<3.2.*@dev"
+    }
+  }
+}
