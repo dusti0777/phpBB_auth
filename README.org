@@ -1,1 +1,32 @@
-/home/pawse/nyvvv.studentergaarden.dk/DocumentRoot/forum/ext/loki/login/README.org
+
+* Install
+
+Note: This requires =phpBB= > 3.1.
+
+** copy files
+Copy the files to =phpBBroot/ext/loki/login/{auth/provider/,config/}= etc. Check
+that the include path to =forum_mysqlconn.inc.php= (storing db info for
+=sgdb=) in =phpBBroot/ext/loki/login/{auth/provider/loki_auth.php= is correct.
+The path is relative to the =phpBBroot= dir.
+
+** enable
+Login to the phpBB admin panel, go to Customize tab then Extensions Management
+and enable =phpBB loki Authentication= Go to General tab then =CLIENT
+COMMUNICATION= > =Authentication= and set =loki_auth= as the authentication
+module.
+
+** about
+Now all logins will be checked just with the =loki_auth= driver. (the DB logins
+are ignored, be careful with your admin user : YOU MUST HAVE AN USER WITH THE
+SAME LOGIN IN sgdb!)
+
+If the user is validated by the =loki_auth= driver, =phpBB= will check if the
+account exists in its own database. If the user is validated but the account
+does not exist in the phpBB database, the login information will be duplicated
+in the database. It permits to have the option to switch to the default phpBB
+auth driver as all the logins will already exist (as they were at the users'
+first connection) .
+
+See this [[https://wiki.phpbb.com/Authentication_providers][link]] for additional info on how to create an extension. This [[https://wiki.phpbb.com/Authentication_plugins][link]] is
+somewhat outdated, but the return values describes are still valid
+=phpBBroot/includes/constants.php= contains the constants used.
