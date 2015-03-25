@@ -1,24 +1,25 @@
 <?php
 
 /*
-  See these links for additional info on howto create an extension
+  See this link for additional info on howto create an extension
  * https://wiki.phpbb.com/Authentication_providers
- * https://www.phpbb.com/community/viewtopic.php?f=461&t=2272371
- * https://github.com/mathieutu/Laravel-Auth-Bridge
 
  The following link is somewhat outdated, but the return values are still valid
  * https://wiki.phpbb.com/Authentication_plugins
+ phpBBroot/includes/constants.php
+ contains the defined constants used below.
  */
 
 namespace loki\login\auth\provider;
 
 if (!defined('IN_PHPBB')) {
+  echo "error";
   exit;
 }
 
-
 class loki_auth extends \phpbb\auth\provider\base
 {
+
 
 
    function quoteIMAP($str)
@@ -91,7 +92,7 @@ class loki_auth extends \phpbb\auth\provider\base
              // otherwise just send LOGIN_SUCCESS
 
              // sgdb inquiry
-             require('../include/forum_mysqlconn.inc.php');
+             require(__DIR__ . '/../../../../../../include/forum_mysqlconn.inc.php');
              $sgdbQuery = "select * from user where user = '" . $username_clean . "';";
              $sgdbResult = mysqli_query($dbLink, $sgdbQuery);
              $sgdbRow = mysqli_fetch_array($sgdbResult);

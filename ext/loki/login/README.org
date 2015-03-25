@@ -30,3 +30,11 @@ first connection) .
 See this [[https://wiki.phpbb.com/Authentication_providers][link]] for additional info on how to create an extension. This [[https://wiki.phpbb.com/Authentication_plugins][link]] is
 somewhat outdated, but the return values describes are still valid
 =phpBBroot/includes/constants.php= contains the constants used.
+
+NB.
+This [[https://www.phpbb.com/community/viewtopic.php?f%3D466&t%3D2233306][link]] describes how to change the board logo. Convert to/from png and
+then rename it to gif, in order to preserve quality. Eq.
+#+BEGIN_SRC sh
+convert lion.png -resize 52x52 site_logo.png
+mv site_logo.png site_logo.gif
+#+END_SRC
