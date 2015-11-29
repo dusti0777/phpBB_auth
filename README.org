@@ -1,4 +1,3 @@
-
 * Install
 
 Note: This requires =phpBB= > 3.1.
@@ -38,3 +37,66 @@ then rename it to gif, in order to preserve quality. Eq.
 convert lion.png -resize 52x52 site_logo.png
 mv site_logo.png site_logo.gif
 #+END_SRC
+
+* General modifications of phpBB
+** Show date and time of quoted post
+Instead of =pawse wrote:= when quoting, this modification shows =pawse » Thu Mar
+26, 2015 10:24 am wrote:=. Change =phpBBroot/posting.php=, line 1575, to the
+following:
+
+#+BEGIN_SRC php
+//$message_parser->message = '[quote=&quot;' . $post_data['quote_username'] . '&quot;]' . censor_text(trim($message_parser->message)) . "[/quote]\n";
+$message_parser->message = '[quote=&quot;' . '[url=' . generate_board_url() . "/viewtopic.$phpEx?p=$post_id#p$post_id" . ']' . $post_data['quote_username'] . ' &raquo; ' . $user->format_date($post_data['post_time']) . '[/url]' . '&quot;]' . censor_text(trim($message_parser->message)) . "[/quote]\n";
+#+END_SRC
+
+** Make sure guest enters a username when posting
+In =posting.php= search for =// validate username= and insert the
+following just before =// validate username=
+
+#+BEGIN_SRC php
+// Tjek at der er skrevet et username, når man poster som guest - Paw
+if ((utf8_strlen($post_data['username']) < 3) && !$user->data['is_registered'])
+{
+	$error[] = $user->lang['TOO_SHORT_USERNAME'];
+}
+#+END_SRC
+
+
+"Username" is in the language files. Though, the same is used all over the forum, so if you change it in the language file, the term gets modified at several other places as well.
+
+You may add a new entry in the language file, e.g. GUESTNAME or YOURNAME and use that instead in posting_editor.html.
+https://www.phpbb.com/community/viewtopic.php?f=74&t=2164909
+
+Se også filen
+forum/language/n/common.php
+	'USERNAME'				=> 'Navn', //
+
+og
+forum/styles/prosilver/template/posting_editor.html
+** newpost2mail
+I filen =newpost2mail.php=
+
+Linje 51:´Tilføj følgende
+#+BEGIN_SRC php
+    // Paw: Vis det brugernavn folk skriver i navne-feltet hvis de ikke er logget ind.
+    if ($user->data['is_registered'])
+      $post_USERNAME    = $user->data['username'];
+    else
+      $post_USERNAME    = $post_data['username'];
+#+END_SRC
+
+Linje 132: Hvis det ønskes, kan fra feltet i mailen ændres i denne linje.
+#+BEGIN_SRC php
+      $headers .= "From: \"".mail_encode(html_entity_decode($config[sitename]))."\" <$config[board_email]>\n";
+#+END_SRC
+
+
+
+Linje 176: Tilføj følgende
+#+BEGIN_SRC php
+      // Paw: indsæt ekstra mellemrum mellem informational table og selve indholdet
+      $message .= "\n";
+#+END_SRC
+
+Linje 249:
+Udkommenter donationsfooter
