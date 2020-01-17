@@ -2,6 +2,6 @@ services:
     auth.provider.loki_auth:
         class: loki\login\auth\provider\loki_auth
         arguments:
-            - @dbal.conn
+            - '@dbal.conn'
         tags:
             - { name: auth.provider }
